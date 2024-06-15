@@ -4,7 +4,7 @@ import 'graphiql/graphiql.min.css';
 import { buildSchema } from 'graphql';
 import docs from './github.docs.gql'
 
-const fetcher: Fetcher = async graphQLParams => {
+const fetcher: Fetcher = async (graphQLParams, opts) => {
   const data = await fetch(
     'https://api.github.com/graphql',
     {
@@ -12,6 +12,7 @@ const fetcher: Fetcher = async graphQLParams => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        ...(opts?.headers ?? {})
       },
       body: JSON.stringify(graphQLParams),
       credentials: 'same-origin',
